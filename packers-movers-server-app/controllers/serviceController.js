@@ -230,4 +230,43 @@ const deleteSerciveById = async (req, resp) => {
   }
 };
 
-export default { addService, getAllService, updateService, deleteSerciveById };
+const getServiceById = async (req, resp) => {
+  try {
+    const _id = req.query.id;
+
+    if (!_id) {
+      return resp.status(403).json({
+        statusCode: 403,
+        message: "the required filed id is missing",
+      });
+    }
+
+    const service = await Service.findOne({ _id });
+
+    if (!service) {
+      return resp
+        .status(404)
+        .json({ statusCode: 404, message: "Service not found" });
+    }
+
+    resp.status(200).json({
+      statusCode: 200,
+      message: "Service fetched successfully",
+      ...service,
+    });
+  } catch (error) {
+    console.error(`Error while fetching service Error ${error.message}`);
+    return resp.status(500).json({
+      statusCode: 500,
+      message: `Error while fetching the service Error : ${error.message}`,
+    });
+  }
+};
+
+export default {
+  addService,
+  getAllService,
+  updateService,
+  deleteSerciveById,
+  getServiceById,
+};

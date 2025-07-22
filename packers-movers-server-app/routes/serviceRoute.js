@@ -19,4 +19,6 @@ router.put(
 
 router.delete("/deleteService", serviceController.deleteSerciveById);
 
+router.get("/gerServiceById", serviceController.getServiceById);
+
 export default router;
