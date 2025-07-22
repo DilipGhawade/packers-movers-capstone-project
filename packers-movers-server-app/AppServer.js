@@ -1,8 +1,13 @@
 import express from "express";
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
-import { createServer } from "http";
-import * as userController from "./controllers/userController.js";
+import userRoutes from "./routes/userRoute.js"; // Ensure the path is correct
+import contactRoutes from "./routes/contactRoute.js";
+import serviceRoute from "./routes/serviceRoute.js";
+import {
+  notFound,
+  errorHandler,
+} from "./middlewares/errorHandlingMiddleWare.js";
 
 // load env
 dotenv.config();
@@ -11,18 +16,25 @@ connectDB();
 // initializing the express
 const app = express();
 // creating the server
-const server = createServer(app);
+// const server = createServer(app);
 
 // add body parser to app
 app.use(express.json());
 
+// access for static folder is added
+app.use("/uploads", express.static("uploads"));
+
 // adding the middleware for error handling
 
-// app.use(notfound);
-// app.use(errorHandler);
+app.use("/api/users/", userRoutes);
+app.use("/api/users/", contactRoutes);
+app.use("/api", serviceRoute);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 7000;
 
-const serverInstance = server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port http://localhost:${PORT}`);
 });
