@@ -21,6 +21,16 @@ const app = express();
 
 // add body parser to app
 app.use(express.json());
+// CORS headers (open to all)
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 // access for static folder is added
 app.use("/uploads", express.static("uploads"));
