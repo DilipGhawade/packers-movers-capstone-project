@@ -48,6 +48,7 @@ const register = async (req, resp) => {
 const login = async (req, resp) => {
   try {
     const { email, password } = req.body;
+    console.log(`the user emila is ${email}`);
 
     const user = await User.findOne({ email });
     console.log(`user found`, user);

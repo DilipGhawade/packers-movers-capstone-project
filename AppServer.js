@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoute.js"; // Ensure the path is correct
 import contactRoutes from "./routes/contactRoute.js";
 import serviceRoute from "./routes/serviceRoute.js";
 import quickQuote from "./routes/quoteRoutes.js";
+import priceRoute from "./routes/priceRoute.js";
 import {
   notFound,
   errorHandler,
@@ -41,6 +42,7 @@ app.use("/api/users/", userRoutes);
 app.use("/api/users/", contactRoutes);
 app.use("/api", serviceRoute);
 app.use("/api", quickQuote);
+app.use("/api", priceRoute);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -48,4 +48,27 @@ const contactUs = async (req, resp) => {
   }
 };
 
-export default contactUs;
+const getAllContact = async (req, resp) => {
+  try {
+    const allContact = await Contact.find();
+    if (allContact.length === 0) {
+      return resp.status(400).json({
+        statusCode: 404,
+        message: "Contact Not Found",
+      });
+    }
+    return resp.status(200).json({
+      statusCode: 200,
+      message: `Contact Fetched successfully`,
+      data: allContact,
+    });
+  } catch (error) {
+    console.log(`Error while fetching quote : ${error.message}`);
+    resp.status(500).json({
+      statusCode: 500,
+      message: `Error while fetching Quote : ${error.message}`,
+    });
+  }
+};
+
+export default { contactUs, getAllContact };
